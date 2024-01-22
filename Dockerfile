@@ -4,6 +4,7 @@ RUN apt-get update && \
   apt-get install -y \
   ffmpeg \
   imagemagick \
+  python3 \
   webp && \
   apt-get upgrade -y && \
   rm -rf /var/lib/apt/lists/*

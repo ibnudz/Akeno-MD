@@ -21,71 +21,117 @@ let handler = async (m, { conn, command, args, usedPrefix }) => {
 }
 */
 
-import axios from "axios";
-import fetch from "node-fetch";
+// import axios from "axios";
+// import fetch from "node-fetch";
 
-var handler = async (m, { args }) => {
-  if (!args[0]) {
-    throw "Input *URL*";
-  }
+// var handler = async (m, { args }) => {
+//   if (!args[0]) {
+//     throw "Input *URL*";
+//   }
+
+//   try {
+//     const url = args[0];
+//     const headersList = {
+//       Accept: "*/*",
+//       "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+//     };
+
+//     const reqOptions = {
+//       url: `https://api.caliph.biz.id/api/fb?url=${url}&apikey=caliphkey`,
+//       method: "GET",
+//       headers: headersList,
+//     };
+
+//     const response = await axios.request(reqOptions);
+//     const firstUrls = response.data.map((item) => item.split(","));
+
+//     const hdMedia = firstUrls[0][0];
+//     const sdMedia = firstUrls[1][0];
+
+//     const hdCaption = `Video Kualitas HD\nLink HD: ${hdMedia}`;
+//     const sdCaption = `Video Kualitas SD\nLink SD: ${sdMedia}`;
+
+//     m.reply(wait);
+
+//     try {
+//       // Send HD video
+//       const hdFile = await fetch(hdMedia);
+//       conn.sendFile(
+//         m.chat,
+//         await hdFile.buffer(),
+//         "video_hd.mp4",
+//         hdCaption,
+//         m
+//       );
+
+//       try {
+//         // Send SD video
+//         const sdFile = await fetch(sdMedia);
+//         //     conn.sendFile(m.chat, await sdFile.buffer(), 'video_sd.mp4', sdCaption, m);
+//       } catch {
+//         // If SD video sending fails, no further action needed
+//       }
+//     } catch {
+//       try {
+//         // Send SD video
+//         const sdFile = await fetch(sdMedia);
+//         //     conn.sendFile(m.chat, await sdFile.buffer(), 'video_sd.mp4', sdCaption, m);
+//       } catch {
+//         // If both HD and SD videos don't exist, send an error message
+//         const cap = "Gagal mengunduh video FB";
+//         conn.sendFile(m.chat, "facebook.mp4", "facebook.mp4", cap, m);
+//       }
+//     }
+//   } catch {
+//     // Jika terjadi kesalahan pada tahap lainnya, kirim pesan kesalahan
+//     const cap = "Gagal mengunduh video FB";
+//     conn.sendFile(m.chat, "facebook.mp4", "facebook.mp4", cap, m);
+//   }
+// };
+
+// handler.help = ["fb"].map((v) => v + " <url>");
+// handler.tags = ["downloader"];
+// handler.limit = true;
+// handler.register = true;
+
+// handler.command = /^(fb(dl)?)$/i;
+
+// export default handler;
+import axios from "axios";
+let handler = async (m, { conn, args, usedPrefix }) => {
+  if (!args[0])
+    throw `*Contoh*\n${usedPrefix}fb https://fb.watch/pKkEPB1ZOe/?mibextid=Nif5oz`;
+
+  let apiKey = "caliphkey"; // Ganti dengan API key yang valid
+  let url = args[0];
+
+  let apiUrl =
+    "https://api.caliph.biz.id/api/fb?url=" + url + "&apikey=" + apiKey;
 
   try {
-    const url = args[0];
-    const headersList = {
-      Accept: "*/*",
-      "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-    };
+    let response = await axios.get(apiUrl);
+    let result = response.data.result.result; // Perubahan di sini
 
-    const reqOptions = {
-      url: `https://backend.shirokamiryzen.repl.co/fb?u=${url}`,
-      method: "GET",
-      headers: headersList,
-    };
+    if (result) {
+      let hdMedia = result.hd || "Link HD: undefined";
+      let sdMedia = result.sd || "Link SD: undefined";
 
-    const response = await axios.request(reqOptions);
-    const firstUrls = response.data.map((item) => item.split(","));
+      let hdCaption = `*∘ 📎 ʟɪɴᴋ Video Kualitas HD:* ${hdMedia}`;
+      let sdCaption =
+        sdMedia !== "Link SD: undefined"
+          ? `\n*∘ 📎 ʟɪɴᴋ Video Kualitas SD:* ${sdMedia}`
+          : "";
 
-    const hdMedia = firstUrls[0][0];
-    const sdMedia = firstUrls[1][0];
-
-    const hdCaption = `Video Kualitas HD\nLink HD: ${hdMedia}`;
-    const sdCaption = `Video Kualitas SD\nLink SD: ${sdMedia}`;
-
-    m.reply(wait);
-
-    try {
-      // Send HD video
-      const hdFile = await fetch(hdMedia);
-      conn.sendFile(
-        m.chat,
-        await hdFile.buffer(),
-        "video_hd.mp4",
-        hdCaption,
-        m
-      );
-
-      try {
-        // Send SD video
-        const sdFile = await fetch(sdMedia);
-        //     conn.sendFile(m.chat, await sdFile.buffer(), 'video_sd.mp4', sdCaption, m);
-      } catch {
-        // If SD video sending fails, no further action needed
-      }
-    } catch {
-      try {
-        // Send SD video
-        const sdFile = await fetch(sdMedia);
-        //     conn.sendFile(m.chat, await sdFile.buffer(), 'video_sd.mp4', sdCaption, m);
-      } catch {
-        // If both HD and SD videos don't exist, send an error message
-        const cap = "Gagal mengunduh video FB";
-        conn.sendFile(m.chat, "facebook.mp4", "facebook.mp4", cap, m);
-      }
+      let finalCaption = `${hdCaption}${sdCaption}`;
+      
+      await m.reply("Sedang diproses...");
+      await m.reply(finalCaption); // Mengirim informasi HD dan SD ke pengguna
+    } else {
+      throw "Data video tidak ditemukan atau tidak valid.";
     }
-  } catch {
-    // Jika terjadi kesalahan pada tahap lainnya, kirim pesan kesalahan
-    const cap = "Gagal mengunduh video FB";
-    conn.sendFile(m.chat, "facebook.mp4", "facebook.mp4", cap, m);
+  } catch (error) {
+    console.error(error);
+    throw "Terjadi kesalahan saat mengambil data dari API.";
   }
 };
 
