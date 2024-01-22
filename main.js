@@ -513,10 +513,10 @@ async function connectionUpdate(update) {
     const pingStart = new Date();
     const infoMsg = `*• ${global.namabot} SUCCESFULLY CONNECTED*\n• © ${global.author}`;
     conn.sendMessage(
-      "6285737235703@s.whatsapp.net",
+      "0@s.whatsapp.net",
       {
         text: infoMsg,
-        mentions: ["13527559722@s.whatsapp.net", jid],
+        mentions: ["0@s.whatsapp.net", jid],
       },
       {
         quoted: global.fakes,

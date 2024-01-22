@@ -8,14 +8,14 @@ import fetch from "node-fetch";
 import { pickRandom } from "../lib/other-function.js";
 
 const defaultMenu = {
-  before: `*ʜᴀʟʟᴏ ᴋᴀᴋ👋.* ɴᴀᴍᴀ sᴀyᴀ ᴀᴅᴀʟᴀʜ *${global.namabot}* ʙᴏᴛ ʙy *${global.author}*
+  before: `*ʜᴀʟʟᴏ ᴋᴀᴋ %name👋.* \nɴᴀᴍᴀ sᴀyᴀ ᴀᴅᴀʟᴀʜ *${global.namabot}* \nʙᴏᴛ ʙy *${global.author}*
 
 ʙᴏᴛ ɪɴɪ ᴅᴀᴘᴀᴛ ᴅɪɢᴜɴᴀᴋᴀɴ sᴇʙᴀɢᴀɪ *ᴇᴅᴜᴋᴀsɪ ᴘᴇʟᴀᴊᴀʀᴀɴ*, *ᴜɴᴅᴜʜᴀɴ ᴍᴇᴅɪᴀ*, *ɢᴀᴍᴇ*, *ᴘᴇɴᴊᴀɢᴀ ɢʀᴜᴘ*, *ᴅᴀɴ ʟᴀɪɴɴʏᴀ* ʏᴀɴɢ ᴅᴀᴘᴀᴛ ᴍᴇᴍʙᴜᴀᴛ ᴋᴀᴍᴜ ʟᴇʙɪʜ ᴍᴜᴅᴀʜ ᴜɴᴛᴜᴋ ᴍᴇɴᴊᴀʟᴀɴɪ ʜᴀʀɪ-ʜᴀʀɪ.
 
 ╭  ◦ CREATOR: *${global.author}*
 │  ◦ VERSION: *${global.v}*
-│  ◦ INSTAGRAM: *${global.sig}*
-╰  ◦ PREFIX: *[ . ]*
+│  ◦ INSTAGRAM: *@ibnubert_*
+╰  ◦ PREFIX: *[ %p ]*
 
 ᴊɪᴋᴀ ᴀᴅᴀ ᴍᴀsᴀʟᴀʜ ᴅᴀʟᴀᴍ ᴘᴇɴɢɢᴜɴᴀᴀɴ sɪʟᴀʜᴋᴀɴ ʜᴜʙᴜɴɢɪ ᴄʀᴇᴀᴛᴏʀ ᴜɴᴛᴜᴋ ᴍᴇɴᴀɴʏᴀᴋᴀɴ *.ᴏᴡɴᴇʀ*
 
@@ -259,12 +259,12 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname, args }) => {
       .profilePictureUrl(conn.user.jid)
       .catch((_) => "./src/avatar_contact.png");
     let arc = pickRandom(global.AraChu2);
-    let p1 = "./tumnil/1.jpg";
-    let p2 = "./tumnil/2.jpg";
-    let p3 = "./tumnil/3.jpg";
-    let p4 = "./tumnil/4.jpg";
-    let p5 = "./tumnil/5.jpg";
-    let prn = `${pickRandom([p1, p2, p3, p4, p5])}`;
+    // let p1 = "./tumnil/1.jpg";
+    // let p2 = "./tumnil/2.jpg";
+    // let p3 = "./tumnil/3.jpg";
+    // let p4 = "./tumnil/4.jpg";
+    // let p5 = "./tumnil/5.jpg";
+    // let prn = `${pickRandom([p1, p2, p3, p4, p5])}`;
     let japan = [
       "https://a.top4top.io/p_1962cau3w1.jpg",
       "https://k.top4top.io/p_1962w2hyp1.jpg",
@@ -290,37 +290,64 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname, args }) => {
     let mn = pickRandom(japan);
     let nm = pickRandom(global.Pallmenu);
     // Biasa
-    await conn.relayMessage(
+    // await conn.sendMessage(
+    //   m.chat,
+    //   {
+    //     requestPaymentMessage: {
+    //       currencyCodeIso4217: "IDR",
+    //       amount1000: 99999 * 1000,
+    //       requestFrom: "0@s.whatsapp.net",
+    //       noteMessage: {
+    //         extendedTextMessage: {
+    //           text: text,
+    //           contextInfo: {
+    //             mentionedJid: [m.sender],
+    //             externalAdReply: {
+    //               showAdAttribution: true,
+    //             },
+    //           },
+    //         },
+    //       },
+    //     },
+    //   },
+    //   {}
+    // );
+    // conn.reply(m.chat, text, fkon, {
+    //   contextInfo: {
+    //     mentionedJid: [m.sender],
+    //     externalAdReply: {
+    //       title: `${htjava} ${namabot}`,
+    //       body: titlebot,
+    //       description: titlebot,
+    //       mediaType: 2,
+    //       thumbnail: await (await fetch(thumb2)).buffer(),
+    //       mediaUrl: sig,
+    //     },
+    //   },
+    // });
+    await conn.sendMessage(
       m.chat,
       {
-        requestPaymentMessage: {
-          currencyCodeIso4217: "IDR",
-          amount1000: 99999 * 1000,
-          requestFrom: "0@s.whatsapp.net",
-          noteMessage: {
-            extendedTextMessage: {
-              text: text,
-              contextInfo: {
-                mentionedJid: [m.sender],
-                externalAdReply: {
-                  showAdAttribution: true,
-                },
-              },
-            },
-          },
+        image: fs.readFileSync("./thumbnail.jpg"),
+        // url: "https://telegra.ph/file/f99dcaacc978fbdcc5fb4.jpg",
+        mimetype: "image/jpeg",
+        // fileLength: 1000000,
+        caption: text,
+        contextInfo: {
+          // Jika Anda ingin menambahkan informasi konteks tambahan
         },
       },
-      {}
+      { quoted: m, ephemeralExpiration: 86400 }
     );
     await conn.sendReact(m.chat, "☑️", m.key);
-    await conn.sendFile(m.chat, "./mp3/menu2.mp3", "", null, m, true);
+    // await conn.sendFile(m.chat, "./mp3/menu2.mp3", "", null, m, true);
     // Biasa
   } catch (e) {
     await conn.reply(m.chat, "Maaf, menu sedang error", m);
     throw e;
   }
 };
-handler.command = /^(menu|reyzxd|koneko)$/i;
+handler.command = /^(menu|akeno)$/i;
 handler.register = false;
 
 export default handler;

@@ -29,6 +29,8 @@ global.bottime = `TIME: ${wktuwib}`;
 // Sticker WM
 global.packname = `© Akeno MD 夜の狼`;
 global.author = `Ibnubert`;
+// Export
+export const author = "Ibnubert";
 
 /* ===========Hiasan=========== */
 let htjava = pickRandom(["乂", "❏", "⫹⫺", "⎔", "✦", "⭔", "⬟"]);
@@ -56,7 +58,7 @@ global.eror = "_Underconstruction_";
 global.lopr = "Ⓟ";
 global.lolm = "Ⓛ";
 global.dmenut = htjava + "───『";
-lobal.dmenub = "│" + pmenus;
+global.dmenub = "│" + pmenus;
 global.dmenub2 = "│" + pmenus;
 global.dmenuf = "╰━━━━━━━━┈─◂";
 global.cmenut = htjava + "───『";

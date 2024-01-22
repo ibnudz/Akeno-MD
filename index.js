@@ -5,6 +5,7 @@ import path from "path";
 import fs from "fs";
 import { promises as fsPromises } from "fs";
 import chalk from "chalk";
+import { author } from "./config.js";
 const app = express();
 const port = process.env.PORT || 8080;
 const basePath = new URL(import.meta.url).pathname;
@@ -38,7 +39,7 @@ async function start(file) {
   });
 
   p.on("message", (data) => {
-    console.log(chalk.cyan(`🟢 [ ${global.author} ] ${data}`));
+    console.log(chalk.cyan(`🟢 [ ${author} ] ${data}`));
     switch (data) {
       case "reset":
         p.kill();
@@ -99,7 +100,7 @@ async function start(file) {
   console.log(chalk.yellow(`💾 Total RAM: ${ramInGB.toFixed(2)} GB`));
   const freeRamInGB = os.freemem() / (1024 * 1024 * 1024);
   console.log(chalk.yellow(`💽 Free RAM: ${freeRamInGB.toFixed(2)} GB`));
-  console.log(chalk.yellow(`📃 Script by ${global.author}`));
+  console.log(chalk.yellow(`📃 Script by ${author}`));
 
   const packageJsonPath = path.join(
     path.dirname(currentFilePath),
@@ -112,7 +113,7 @@ async function start(file) {
     console.log(chalk.cyan(`Name: ${packageJsonObj.name}`));
     console.log(chalk.cyan(`Version: ${packageJsonObj.version}`));
     console.log(chalk.cyan(`Description: ${packageJsonObj.description}`));
-    console.log(chalk.cyan(`Author: ${global.author}`));
+    console.log(chalk.cyan(`Author: ${packageJsonObj.author}`));
   } catch (err) {
     console.error(chalk.red(`❌ Unable to read package.json: ${err}`));
   }
@@ -128,7 +129,7 @@ async function start(file) {
   const currentTime = new Date().toLocaleString();
   console.log(chalk.cyan(`${currentTime}`));
 
-  setInterval(() => {}, 1000);
+  setInterval(() => { }, 1000);
 }
 
 function getTotalFoldersAndFiles(folderPath) {

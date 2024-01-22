@@ -1651,7 +1651,7 @@ export async function presenceUpdate(presenceUpdate) {
 dfail
 */
 global.dfail = (type, m, conn) => {
-  const userTag = `👋😹 ᴡᴏɪ*@${m.sender.split("@")[0]}*, `;
+  const userTag = `ʜᴀʟʟᴏ ᴋᴀᴋ *@${m.sender.split("@")[0]}*👋, `;
   const emoji = {
     general: "❌",
     owner: "❌",
