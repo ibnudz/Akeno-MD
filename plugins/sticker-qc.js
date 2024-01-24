@@ -92,7 +92,19 @@ async function Quotly(obj) {
             }
           );
         } catch (e) {
-          return e;
+          try {
+            json = await axios.post(
+              "https://d8a998a4-7ec2-43eb-b69a-5776ae0181ec-00-5z5tt8rmf34w.janeway.replit.dev/generate",
+              obj,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+          } catch (e) {
+            return e;
+          }
         }
       }
     }
